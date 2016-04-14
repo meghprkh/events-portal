@@ -9,12 +9,25 @@ var User = sequelize.define('user', {
 
 exports.User = User
 
+var Group = sequelize.define('group', {
+  username: Sequelize.STRING,
+  password: Sequelize.STRING,
+  displayName: Sequelize.STRING
+});
+
+exports.Group = Group
+
 
 // Create Sample models
 sequelize.sync().then(() => {
   return User.bulkCreate([
     {username: 'megh@gmail.com', password: 'password', displayName: 'Megh'},
     {username: 'sourabh@gmail.com', password: 'password', displayName: 'Sourabh'}
+  ]);
+}).then(() => {
+  return Group.bulkCreate([
+    {username: 'webdev@gmail.com', password: 'password', displayName: 'Web-dev club'},
+    {username: 'music@gmail.com', password: 'password', displayName: 'Music club'}
   ]);
 }).then(() => {
   console.log('> Sample models created successfully');

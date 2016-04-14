@@ -1,15 +1,15 @@
 var passport = require('passport');
 
 module.exports = function (app) {
-  app.get('/login', (req, res) => res.render('login', {error: req.flash('error')}))
+  app.get('/group/login', (req, res) => res.render('group-login', {error: req.flash('error')}))
 
-  app.post('/login',
-    passport.authenticate('user', { successReturnToOrRedirect: '/',
+  app.post('/group/login',
+    passport.authenticate('group', { successReturnToOrRedirect: '/',
                                      failureRedirect: '/login',
                                      failureFlash: true})
   );
 
-  app.get('/logout', (req, res) => {
+  app.get('/group/logout', (req, res) => {
     req.logout();
     res.redirect('/');
   });

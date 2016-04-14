@@ -17,6 +17,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./auth.js')(app)
+require('./group-auth.js')(app)
 
 app.get('/', (req, res) => {
   res.render('home', { user: req.user });

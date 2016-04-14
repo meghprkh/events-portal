@@ -9,7 +9,7 @@ var models = require('./models')
 // (`username` and `password`) submitted by the user.  The function must verify
 // that the password is correct and then invoke `cb` with a user object, which
 // will be set at `req.user` in route handlers after authentication.
-passport.use(new LocalStrategy(
+passport.use('user', new LocalStrategy(
   function(username, password, cb) {
     models.User.findOne({
       where: {
@@ -18,6 +18,23 @@ passport.use(new LocalStrategy(
       }
     }).then(user => {
       if (!user) return cb(null, false, 'Incorrect credentials!');
+      user.type = 'User'
+      return cb(null, user);
+    }).catch(err => {
+      return cb(err);
+    });
+  }));
+
+passport.use('group', new LocalStrategy(
+  function(username, password, cb) {
+    models.Group.findOne({
+      where: {
+        username: username,
+        password: password
+      }
+    }).then(user => {
+      if (!user) return cb(null, false, 'Incorrect credentials!');
+      user.type = 'Group'
       return cb(null, user);
     }).catch(err => {
       return cb(err);
@@ -33,11 +50,12 @@ passport.use(new LocalStrategy(
 // serializing, and querying the user record by ID from the database when
 // deserializing.
 passport.serializeUser(function(user, cb) {
-  cb(null, user.id);
+  cb(null, {id: user.id, type: user.type});
 });
 
-passport.deserializeUser(function(id, cb) {
-  models.User.findById(id).then(user => {
+passport.deserializeUser(function(uid, cb) {
+  models[uid.type].findById(uid.id).then(user => {
+    user.type = uid.type
     return cb(null, user);
   }).catch(err => {
     return cb(err)
