@@ -18,6 +18,7 @@ app.use(passport.session());
 
 require('./auth.js')(app)
 require('./group-auth.js')(app)
+require('./route-params.js')(app)
 
 app.get('/', (req, res) => {
   res.render('home', { user: req.user });
@@ -25,6 +26,10 @@ app.get('/', (req, res) => {
 
 app.get('/profile', ensureAuthenticated, (req, res) => {
   res.render('profile', { user: req.user });
+});
+
+app.get('/group/:group_id', (req, res) => {
+  res.render('profile', { user: req.pgroup });
 });
 
 app.listen(3000, () => {
