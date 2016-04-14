@@ -1,7 +1,7 @@
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
-var db = require('./db')
+var models = require('./models')
 
 // Configure the local strategy for use by Passport.
 //
@@ -11,11 +11,16 @@ var db = require('./db')
 // will be set at `req.user` in route handlers after authentication.
 passport.use(new LocalStrategy(
   function(username, password, cb) {
-    db.users.findByUsername(username, function(err, user) {
-      if (err) { return cb(err); }
-      if (!user) { return cb(null, false, 'Incorrect credentials!'); }
-      if (user.password != password) { return cb(null, false, 'Incorrect credentials!'); }
+    models.User.findOne({
+      where: {
+        username: username,
+        password: password
+      }
+    }).then(user => {
+      if (!user) return cb(null, false, 'Incorrect credentials!');
       return cb(null, user);
+    }).catch(err => {
+      return cb(err);
     });
   }));
 
@@ -32,8 +37,9 @@ passport.serializeUser(function(user, cb) {
 });
 
 passport.deserializeUser(function(id, cb) {
-  db.users.findById(id, function (err, user) {
-    if (err) { return cb(err); }
-    cb(null, user);
+  models.User.findById(id).then(user => {
+    return cb(null, user);
+  }).catch(err => {
+    return cb(err)
   });
 });
