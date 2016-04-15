@@ -17,6 +17,9 @@ var Group = sequelize.define('group', {
 
 exports.Group = Group
 
+User.belongsToMany(Group, {through: 'UserGroup'});
+Group.belongsToMany(User, {through: 'UserGroup'});
+
 
 // Create Sample models
 sequelize.sync().then(() => {
