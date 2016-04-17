@@ -15,10 +15,10 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: false, save
 app.use(passport.initialize());
 app.use(passport.session());
 
+require('./route-params.js')(app)
 app.use('/user', require('./user.js'))
 app.use('/group', require('./group.js'))
 app.use('/event', require('./event.js'))
-require('./route-params.js')(app)
 
 app.listen(3000, () => {
   console.log('Example app listening on port 3000!');

@@ -2,6 +2,7 @@ var router = require('express').Router();
 var passport = require('passport');
 var models = require('./models');
 var middleware = require('./middleware');
+require('./route-params.js')(router)
 
 router.get('/', (req, res) => {
   models.Group.findAll().then(groups => {

@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var passport = require('passport');
 var middleware = require('./middleware');
+require('./route-params.js')(router)
 
 router.get('/', middleware.isUser, (req, res) => {
   res.send(req.user);

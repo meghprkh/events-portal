@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var models = require('./models');
 var middleware = require('./middleware')
+require('./route-params.js')(router)
 
 router.get('/', (req, res) => {
   models.Event.findAll().then(events => res.send(events));
