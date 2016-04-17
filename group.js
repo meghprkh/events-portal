@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
   })
 })
 
-router.get('/:group_id', (req, res) => res.send(req.group))
+router.get('/:group_id', (req, res) => res.send(req.pgroup))
 
 router.get('/:group_id/subscribe', middleware.isUser, (req, res) => {
   req.user.addGroup(req.pgroup).then(() => res.send());
