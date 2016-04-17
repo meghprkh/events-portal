@@ -3,6 +3,8 @@ var app = express();
 var passport = require('passport');
 var ensureAuthenticated = require('connect-ensure-login').ensureAuthenticated();
 
+var middleware = require('./middleware');
+
 require('./passport_setup');
 
 app.set('views', 'views');
@@ -32,14 +34,14 @@ app.get('/group/:group_id', (req, res) => {
   res.render('profile', { user: req.pgroup });
 });
 
-app.get('/user/groups', (req, res) => {
+app.get('/user/groups', middleware.isUser, (req, res) => {
   req.user.getGroups().then(groups => {
     res.send(groups);
     console.log(groups)
   })
 });
 
-app.get('/user/subscribe/:group_id', (req,res) => {
+app.get('/user/subscribe/:group_id', middleware.isUser, (req,res) => {
   req.user.addGroup(req.pgroup).then(() => res.send('Success'));
 })
 
