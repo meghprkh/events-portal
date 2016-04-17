@@ -20,6 +20,7 @@ app.use(passport.session());
 
 require('./auth.js')(app)
 app.use('/group', require('./group.js'))
+app.use('/event', require('./event.js'))
 require('./route-params.js')(app)
 
 app.get('/', (req, res) => {

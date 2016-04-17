@@ -38,8 +38,29 @@ var Group = sequelize.define('group', {
 
 exports.Group = Group
 
+var Event = sequelize.define('event', {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  date: {
+    type: Sequelize.DATE,
+    allowNull: false
+  },
+  description: {
+    type: Sequelize.STRING,
+    allowNull: true
+  }
+});
+
+exports.Event = Event;
+
 User.belongsToMany(Group, {through: 'UserGroup'});
 Group.belongsToMany(User, {through: 'UserGroup'});
+Event.belongsTo(Group);
+Group.hasMany(Event);
+User.belongsToMany(Event, {through: 'UserEvent'})
+Event.belongsToMany(User, {through: 'UserEvent'})
 
 
 // Create Sample models
@@ -52,6 +73,11 @@ sequelize.sync().then(() => {
   return Group.bulkCreate([
     {username: 'webdev@gmail.com', password: 'password', name: 'Web-dev club', description: 'This is the web-dev club'},
     {username: 'music@gmail.com', password: 'password', name: 'Music club', description: 'This is the music club'}
+  ], {ignoreDuplicates: true});
+}).then(() => {
+  return Event.bulkCreate([
+    {id: 1, name: 'Web Dev Quiz', date: Date.now(), description: 'Portal created by MTG'},
+    {id: 2, name: 'Music Club concert', date: Date.now(), description: 'Concert by members of the music club'}
   ], {ignoreDuplicates: true});
 }).then(() => {
   console.log('> Sample models created successfully');

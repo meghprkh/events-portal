@@ -20,4 +20,16 @@ module.exports = app => {
       next(err)
     })
   })
+
+  app.param('event_id', function (req, res, next, id) {
+    models.Event.findById(id).then(event => {
+      req.pevent = event
+      console.log('hi1')
+      next()
+    }).catch(err => {
+      console.log('hi')
+      console.error(err)
+      next(err)
+    })
+  })
 }
