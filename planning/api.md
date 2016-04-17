@@ -1,6 +1,7 @@
 /user
 - POST /login
 - GET /logout
+- GET / => get current user (user auth)
 - GET /groups => Return subscribed groups
 - GET /events => Return going to events
 
