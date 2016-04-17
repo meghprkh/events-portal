@@ -31,20 +31,12 @@ app.get('/profile', ensureAuthenticated, (req, res) => {
   res.render('profile', { user: req.user });
 });
 
-app.get('/group/:group_id', (req, res) => {
-  res.render('profile', { user: req.pgroup });
-});
-
 app.get('/user/groups', middleware.isUser, (req, res) => {
   req.user.getGroups().then(groups => {
     res.send(groups);
     console.log(groups)
   })
 });
-
-app.get('/user/subscribe/:group_id', middleware.isUser, (req,res) => {
-  req.user.addGroup(req.pgroup).then(() => res.send('Success'));
-})
 
 app.listen(3000, () => {
   console.log('Example app listening on port 3000!');
