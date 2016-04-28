@@ -1,9 +1,0 @@
-<% if (!user) { %>
-	<p>Welcome! Please <a href="/login">log in</a>.</p>
-  <p>Or log in as a <a href="/group/login">group</a></p>
-<% } else { %>
-  <% if (user.type == 'Group') {  %>
-    <p>Hello group</p>
-  <% } %>
-	<p>Hello, <%= user.username %>. View your <a href="/profile">profile</a>.</p>
-<% } %>
