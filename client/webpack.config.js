@@ -29,7 +29,7 @@ if (TARGET === 'start') {
       publicPath: '/static/'
     },
     entry: [
-      'webpack-dev-server/client?http://localhost:3001',
+      'webpack-dev-server/client?http://localhost:3000',
       'webpack/hot/only-dev-server',
       path.join(__dirname ,'/src/index')
     ],
