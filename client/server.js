@@ -9,7 +9,9 @@ module.exports = function (PORT) {
     historyApiFallback: true,
     contentBase: __dirname,
     proxy: {
-      "/api/*" : `http://localhost:${PORT - 1}`
+      "/api/*" : `http://localhost:${PORT - 1}`,
+      "/css/*" : `http://localhost:${PORT - 1}`,
+      "/js/*" : `http://localhost:${PORT - 1}`
     },
   }).listen(PORT, '0.0.0.0', function (err, result) {
     if (err) {
