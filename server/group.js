@@ -5,7 +5,9 @@ var middleware = require('./middleware');
 require('./route-params.js')(router)
 
 router.get('/', (req, res) => {
-  models.Group.findAll().then(groups => {
+  models.Group.findAll({
+    attributes: { exclude: ['password'] }
+  }).then(groups => {
     res.send(groups)
   })
 })

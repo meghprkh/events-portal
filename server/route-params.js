@@ -2,7 +2,9 @@ var models = require('./models')
 
 module.exports = app => {
   app.param('user_id', function (req, res, next, id) {
-    models.User.findById(id).then(user => {
+    models.User.findById(id, {
+      attributes: { exclude: ['password'] }
+    }).then(user => {
       req.puser = user
       next()
     }).catch(err => {
@@ -12,7 +14,9 @@ module.exports = app => {
   })
 
   app.param('group_id', function (req, res, next, id) {
-    models.Group.findById(id).then(group => {
+    models.Group.findById(id, {
+      attributes: { exclude: ['password'] }
+    }).then(group => {
       req.pgroup = group
       next()
     }).catch(err => {
@@ -22,7 +26,9 @@ module.exports = app => {
   })
 
   app.param('event_id', function (req, res, next, id) {
-    models.Event.findById(id).then(event => {
+    models.Event.findById(id, {
+      attributes: { exclude: ['password'] }
+    }).then(event => {
       req.pevent = event
       console.log('hi1')
       next()
