@@ -1,30 +1,38 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { loadEvents } from '../actions'
-import { LOADING, LOADED, ERROR } from '../constants'
+import Events from './Events'
+import Event from './Event'
+import { changeRoute } from '../actions'
+import page from 'page'
 
-class Root extends Component {
-  componentDidMount() {
-    this.props.dispatch(loadEvents())
-  }
+const EVENT_PAGE = 'EVENT_PAGE'
+const EVENTS_PAGE = 'EVENTS_PAGE'
 
-  render() {
-    const { status, data } = this.props;
+const App = React.createClass({
+  componentDidMount: function() {
+    const { dispatch } = this.props;
+    page('/', ctx => {
+      dispatch(changeRoute(EVENTS_PAGE, ctx))
+    })
+    page('/events', ctx => {
+      dispatch(changeRoute(EVENTS_PAGE, ctx))
+    })
+    page('/event/:event_id', ctx => {
+      dispatch(changeRoute(EVENT_PAGE, ctx))
+    })
+    page()
+  },
+  render () {
+    var pathComponents = {
+      [EVENT_PAGE]: (<Event/>),
+      [EVENTS_PAGE]: (<Events/>),
+    }
     return (
       <div>
-        {status === LOADING && <p>Loading</p>}
-        {status !== ERROR && data.map(event => (
-          <div key={event.id}>
-            <h1>{event.name}</h1>
-            <h3>{event.description}</h3>
-            <p>On {event.date}</p>
-          </div>
-        ))}
+        {pathComponents[this.props.routing.path]}
       </div>
     )
   }
-}
+})
 
-export default connect(state => {
-  return state.events
-})(Root)
+export default connect(state => state)(App)
