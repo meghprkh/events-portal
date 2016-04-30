@@ -62,23 +62,29 @@ Group.hasMany(Event);
 User.belongsToMany(Event, {through: 'UserEvent'})
 Event.belongsToMany(User, {through: 'UserEvent'})
 
+var users;
 
 // Create Sample models
 sequelize.sync().then(() => {
   return User.bulkCreate([
-    {username: 'megh@gmail.com', password: 'password', name: 'Megh'},
-    {username: 'sourabh@gmail.com', password: 'password', name: 'Sourabh'}
+    {id: 1, username: 'megh@gmail.com', password: 'password', name: 'Megh'},
+    {id: 2, username: 'sourabh@gmail.com', password: 'password', name: 'Sourabh'}
   ], {ignoreDuplicates: true});
-}).then(() => {
+}).then((usersIn) => {
+  users = usersIn;
   return Group.bulkCreate([
-    {username: 'webdev@gmail.com', password: 'password', name: 'Web-dev club', description: 'This is the web-dev club'},
-    {username: 'music@gmail.com', password: 'password', name: 'Music club', description: 'This is the music club'}
+    {id: 1, username: 'webdev@gmail.com', password: 'password', name: 'Web-dev club', description: 'This is the web-dev club'},
+    {id: 2, username: 'music@gmail.com', password: 'password', name: 'Music club', description: 'This is the music club'}
   ], {ignoreDuplicates: true});
 }).then(() => {
   return Event.bulkCreate([
-    {id: 1, name: 'Web Dev Quiz', date: Date.now(), description: 'Portal created by MTG'},
-    {id: 2, name: 'Music Club concert', date: Date.now(), description: 'Concert by members of the music club'}
+    {id: 1, name: 'Web Dev Quiz', date: Date.now(), description: 'Portal created by MTG', groupId: 1},
+    {id: 2, name: 'Music Club concert', date: Date.now(), description: 'Concert by members of the music club', groupId: 2}
   ], {ignoreDuplicates: true});
-}).then(() => {
+}).then(() => users[0].addGroup(1))
+.then(() => users[1].addGroup(2))
+.then(() => users[0].addEvents([1, 2]))
+.then(() => users[1].addEvents(2))
+.then(() => {
   console.log('> Sample models created successfully');
 });
