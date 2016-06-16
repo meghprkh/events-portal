@@ -1,29 +1,34 @@
 import React, { PropTypes } from 'react'
-import { Provider } from 'react-redux'
-import configureStore from './store'
-import Root from './components'
-import Event from './components/Event'
-import { changeRoute } from './actions'
-import page from 'page'
+import { Location, Locations, Link } from 'react-router-component';
 
-const store = configureStore();
+import Header from './components/dumb/Header'
+
+const MainPage = props => (
+  <div>
+    This is home page<br/>
+    <Link href='/users/megh'>Go to user page</Link>
+  </div>
+)
+
+const UserPage = props => (
+  <div>
+    Hi {props.username} <br/>
+    {props.auth && 'Props work too'} <br/>
+    <Link href='/'>Home</Link>
+  </div>
+)
+
 
 const App = React.createClass({
-  componentDidMount() {
-    page('/', changeRoute)
-    page('/events', changeRoute)
-    page('/event/:event_id', changeRoute)
-    page()
-  },
-  paths: {
-    '/': <Root/>,
-    '/event': <Event/>
-  },
   render () {
     return (
-      <Provider store={store}>
-        <Root/>
-      </Provider>
+      <div>
+        <Header/>
+        <Locations hash>
+          <Location path="/" handler={MainPage} />
+          <Location path="/users/:username(/)" handler={UserPage} auth={true}/>
+        </Locations>
+      </div>
     )
   }
 })
