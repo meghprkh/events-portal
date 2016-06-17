@@ -4,6 +4,7 @@ import { Location, Locations, Link } from 'react-router-component';
 import Header from './components/dumb/Header'
 import Login from './components/smart/Login'
 import Events from './components/smart/Events'
+import Groups from './components/smart/Groups'
 import IndexPage from './components/dumb/'
 
 import request from 'superagent-use'
@@ -61,6 +62,8 @@ const App = React.createClass({
         <Header loggedInAs={loggedInAs}/>
         <Locations hash ref={ref => window.router = ref}>
           <Location path="/(events)" handler={Events}
+                    loggedInAs={loggedInAs} name={name} email={email}/>
+          <Location path="/groups" handler={Groups}
                     loggedInAs={loggedInAs} name={name} email={email}/>
           <Location path="/logout" handler={Logout} onLogout={this.onLogout}
                     loggedInAs={loggedInAs} name={name} email={email}/>

@@ -12,7 +12,7 @@ const Header = props => (
     <Navbar.Collapse>
       <Nav>
         <NavItem href='#/events'>All Events</NavItem>
-        <NavItem href='#'>All Groups</NavItem>
+        <NavItem href='#/groups'>All Groups</NavItem>
       </Nav>
       {props.loggedInAs == 'none' &&
         <Nav pullRight>
