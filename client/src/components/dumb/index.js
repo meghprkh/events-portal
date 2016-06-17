@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from './Header';
-import Login from './LoginPage'
+import Login from './Login'
 import GroupDisplay from './GroupDisplay'
 import EventDisplay from './EventDisplay'
 

@@ -43,7 +43,9 @@
     "react-dom": "^15.0.1",
     "react-router-component": "^0.34.0",
     "react-tap-event-plugin": "^1.0.0",
-    "sequelize": "^3.21.0"
+    "sequelize": "^3.21.0",
+    "superagent-prefix": "0.0.2",
+    "superagent-use": "0.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.0.20",

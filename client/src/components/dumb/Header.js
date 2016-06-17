@@ -16,18 +16,20 @@ const Header = props => (
       </Nav>
       {props.loggedInAs == 'none' &&
         <Nav pullRight>
-          <NavItem>Login</NavItem>
+          <NavItem href='#/user/login'>Login</NavItem>
         </Nav>}
       {props.loggedInAs == 'user' &&
         <Nav pullRight>
           <NavItem href='#'>My Groups</NavItem>
           <NavItem href='#'>My Events</NavItem>
+          <NavItem href='#/logout'>Logout</NavItem>
         </Nav>}
       {props.loggedInAs == 'group' &&
         <Nav pullRight>
           <NavItem href='#'>Group Page</NavItem>
           <NavItem href='#'>Create/Update Event</NavItem>
           <NavItem href='#'>Members</NavItem>
+          <NavItem href='#/logout'>Logout</NavItem>
         </Nav>}
     </Navbar.Collapse>
   </Navbar>
