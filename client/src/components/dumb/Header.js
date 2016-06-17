@@ -5,13 +5,13 @@ const Header = props => (
   <Navbar>
     <Navbar.Header>
       <Navbar.Brand>
-        <a href="#">Events Portal</a>
+        <a href="#/">Events Portal</a>
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>
     <Navbar.Collapse>
       <Nav>
-        <NavItem href='#'>All Events</NavItem>
+        <NavItem href='#/events'>All Events</NavItem>
         <NavItem href='#'>All Groups</NavItem>
       </Nav>
       {props.loggedInAs == 'none' &&

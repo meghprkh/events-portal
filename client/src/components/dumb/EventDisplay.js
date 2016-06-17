@@ -8,14 +8,17 @@ var displayEvent = props => (
         {props.eventList.map((el, key) => (
           <Panel header={el.name} bsStyle="Success">
             {el.description}
-            {props.isUser == true &&
-            (el.isGoing == true) ?
-            <Button bsStyle="primary" bsSize="large" style={{float: 'right'}}>
-              Going
-            </Button> :
-            <Button bsStyle="danger" bsSize="large" style={{float: 'right'}}>
-              Not Going
-            </Button>}
+            {props.isUser && (
+              el.going  ?
+              <Button bsStyle="primary" bsSize="large" style={{float: 'right'}}
+                 onClick={() => props.toggleState(el.id, 'notgoing')}>
+                Going
+              </Button> :
+              <Button bsStyle="danger" bsSize="large" style={{float: 'right'}}
+                 onClick={() => props.toggleState(el.id, 'going')}>
+                Not Going
+              </Button>
+            )}
             <br />
             - <i>{el.date}</i>
           </Panel>
